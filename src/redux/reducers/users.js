@@ -5,10 +5,11 @@ const initialState = {
     name: 'harshvardhan',
     loading: false,
     error: null,
+    token: null,
 }
 
-export default function users(state=initialState, action){
-    console.log(action)
+export default function (state=initialState, action){
+    console.log(action, '<=================== reducer')
     switch(action.type){
         case type.GET_USERS_REQUEST:
             return {
@@ -22,6 +23,23 @@ export default function users(state=initialState, action){
                 users: action.user
             }
         case type.GET_USERS_FAILED:
+            return {
+                ...state,
+                loading: false,
+                error: action.message
+            }
+        case type.POST_LOGIN_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+        case type.POST_LOGIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                token: action.token
+            }
+        case type.POST_LOGIN_FAILED:
             return {
                 ...state,
                 loading: false,
