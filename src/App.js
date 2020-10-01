@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getUsers } from './redux/actions/users'
-
-const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+import { getUsers, postLogin } from './redux/actions/users';
 
 class App extends React.Component {
 
   componentDidMount() {
     this.props.getUser();
+    const login = {
+      email: "eve.holt@reqres.in",
+      password: "cityslicka"
+    }
+    this.props.doLogin(login);
   }
 
   render() {
@@ -15,7 +18,14 @@ class App extends React.Component {
       <div>
         {this.props.users}
         <ul>
-          {}
+          {this.props.allUsers.map(el => (
+            <li key={el.id}>
+              {el.name} - {el.username}
+              <ul>
+                <li>{el.email}</li>
+              </ul>
+            </li>
+          ))}
         </ul>
       </div>
     )
@@ -31,7 +41,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUser: () => { dispatch(getUsers()) }
+    getUser: () => { dispatch(getUsers()) },
+    doLogin: (login) => { dispatch(postLogin(login)) }
   }
 }
 
