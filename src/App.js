@@ -15,7 +15,14 @@ class App extends React.Component {
       <div>
         {this.props.users}
         <ul>
-          {}
+          {this.props.allUsers.map(el => (
+            <li key={el.id}>
+              {el.name}
+              <ul>
+                <li>{el.email}</li>
+              </ul>
+            </li>
+          ))}
         </ul>
       </div>
     )
